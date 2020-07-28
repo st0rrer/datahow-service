@@ -1,6 +1,6 @@
 build:
 	@echo Building binary...
-	@go build -o ./dist/datahow ./cmd/*.go
+	@CGO_ENABLED=0 GOOS=linux go build -o ./dist/datahow ./cmd/*.go
 
 clean:
 	@echo Removing binary...
