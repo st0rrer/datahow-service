@@ -1,6 +1,10 @@
 package log
 
-import "sync"
+import (
+	"fmt"
+	"net"
+	"sync"
+)
 
 type Service struct {
 	ipAddresses map[string]struct{}
@@ -14,6 +18,10 @@ func NewService() *Service {
 }
 
 func (s *Service) ProcessMessage(msg *Message) error {
+
+	if net.ParseIP(msg.IP) == nil {
+		return fmt.Errorf("%s is invalid IP", msg.IP)
+	}
 
 	defer s.rwMutex.Unlock()
 	s.rwMutex.Lock()
